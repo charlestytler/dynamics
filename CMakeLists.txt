@@ -11,20 +11,12 @@ include(cmake/dependencies.cmake)
 # Core C++ Library
 # =========================
 
-add_library(DynamicsLibrary STATIC core/simulate.cpp)
+add_library(DynamicsLibrary INTERFACE)
 
-target_sources(
+target_include_directories(
     DynamicsLibrary
-    PUBLIC
-        FILE_SET HEADERS
-            BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}
-            FILES
-                core/simulate.hpp
-                core/models/kinematic_bicycle.hpp
-                core/integration/euler.hpp
+    INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/core
 )
-
-target_link_libraries(DynamicsLibrary PUBLIC Eigen3::Eigen)
 
 # =========================
 # Python Module
@@ -32,7 +24,7 @@ target_link_libraries(DynamicsLibrary PUBLIC Eigen3::Eigen)
 
 pybind11_add_module(_DynamicsLibrary
     bindings/pybind_module.cpp
-    bindings/model_bindings.cpp
+    bindings/kinematic_bicycle_model.cpp
 )
 
-target_link_libraries(_DynamicsLibrary PRIVATE DynamicsLibrary)
+target_link_libraries(_DynamicsLibrary PRIVATE Eigen3::Eigen DynamicsLibrary)
