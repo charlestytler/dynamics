@@ -1,0 +1,25 @@
+include(FetchContent)
+
+# ----------------------
+# Eigen
+# ----------------------
+
+FetchContent_Declare(
+    eigen
+    GIT_REPOSITORY https://gitlab.com/libeigen/eigen.git
+    GIT_TAG 3.4.0
+)
+
+FetchContent_MakeAvailable(eigen)
+
+# ----------------------
+# pybind11
+# ----------------------
+
+FetchContent_Declare(
+    pybind11
+    GIT_REPOSITORY https://github.com/pybind/pybind11.git
+    GIT_TAG v2.11.1
+)
+
+FetchContent_MakeAvailable(pybind11)
